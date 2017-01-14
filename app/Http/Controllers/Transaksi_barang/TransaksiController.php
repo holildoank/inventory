@@ -13,6 +13,7 @@ use App\Models\data_barang;
 use App\Models\ref_jenis_bar;
 use App\Models\ref_satuan;
 use App\Models\data_log_barang;
+use App\Models\data_transaksi;
 
 class TransaksiController extends Controller
 {
@@ -20,7 +21,7 @@ class TransaksiController extends Controller
     public function getIndex(){
         $data =[];
         $data['methode'] ='index';
-        $data['title'] = 'Form Transasi';
+        $data['title'] = 'Form Transaksi';
         $data['mode']   = 'add';
         $data['judul'] ='Form Transaksi Barang';
         return view('Transaksi.create',$data);
@@ -88,6 +89,52 @@ class TransaksiController extends Controller
                'label' => $arr['label'],
                'err' => $arr['err']
            ]);
+    }
+    public function getShow(){
+        $data =[];
+        $data['methode'] ='index';
+        $data['judul'] ='Data Transaksi';
+        return view('Transaksi.index',$data);
+
+    }
+    public function getAjaxtransaksi(Request $req){
+        if($req->ajax()){
+            $res = [];
+            $out = '';
+            $status_transaksi =[
+                1 => 'Proses',
+                2 => 'Lunas',
+            ];
+            $items = data_transaksi::transaksi($req->all())->paginate($req->limit);
+			$total = $items->total();
+            if($total > 0):
+                $no =1;
+                foreach ($items as $item) {
+                    $out .='
+                            <tr class="barang-'.$item->id_transaksi.'">
+                            <td>'.$no.'</td>
+
+                                <td class="text-middle text-center">'.$item->nomor_transaksi.'</td>
+                                <td class="text-middle text-center">' . \Format::indoDate2($item->created_at) . '' . \Format::hari($item->created_at) . ', ' . \Format::jam($item->created_at) . '</td>
+                                <td class="text-middle text-center">' . number_format($item->wajib_bayar,0,',','.') . '</td>
+                                <td class="text-middle text-center">' . number_format($item->jumlah_bayar,0,',','.') . '</td>
+                                <td class="text-middle text-center">' .$status_transaksi[$item->status_transaksi] . '</td>
+
+
+                            </tr>
+                        ';
+                        $no++;
+                }
+            else:
+                $out = '
+                    <tr>
+                        <td>Tidak ditemukan data </td>
+                    </tr>';
+            endif;
+            $res['content'] = $out;
+		    $res['pagin'] = $items->render();
+		return json_encode($res);
+        }
     }
 
 }

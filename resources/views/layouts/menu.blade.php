@@ -39,7 +39,11 @@
                     <li>
                         <a href="{{URL::to('transaksi')}}"><i class="fa fa-circle-o"></i>Transaksi</a>
                     </li>
+                    <li>
+                        <a href="{{URL::to('transaksi/show')}}"><i class="fa fa-circle-o"></i>Data Transaksi</a>
+                    </li>
                 </ul>
+
             </li>
         </ul>
         <!-- END SIDEBAR MENU -->
