@@ -88,7 +88,7 @@ $(function(){
 		event.preventDefault();
 
 		$(this).closest('.baris_form').remove();
-
+		
 
 
 	});
@@ -108,19 +108,11 @@ $(function(){
 			kembali_null = 0;
 
 		var bayar = parseInt($(':input[name="total_bayar"]').val());
-
 		if (bayar > subtotal) {
 			var kembalian =  bayar - subtotal;
-
 	       }else{
 	          var kembalian = kembali_null;
 	       }
-
-
-
-
-
-
 		$('.faktur-subtotal').html(subtotal);
 		$('.faktur-total').html(total);
 		$('.faktur-kembalian').html(kembalian);

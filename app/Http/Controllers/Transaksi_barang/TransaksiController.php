@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Jobs\Masterbarang\TransaksiJob;
+
 
 use App\Models\data_barang;
 use App\Models\ref_jenis_bar;
@@ -74,6 +76,18 @@ class TransaksiController extends Controller
             return json_encode($res);
 
         }
+    }
+    public function postTransaksi(Request $req){
+        if(count($req->id_barang)==0)
+           return redirect()->back()->withNotif([
+               'label' => 'danger',
+               'err' => '<center>OOps!, Anda Belum Memilih Barang </center>'
+           ]);
+        $arr = $this->dispatch(new TransaksiJob($req->all()));
+        return redirect('transaksi/')->withNotif([
+               'label' => $arr['label'],
+               'err' => $arr['err']
+           ]);
     }
 
 }
