@@ -24,6 +24,7 @@ Route::group(['middleware' 	=> 'auth'], function () {
 	Route::controllers([
 		'dashboard'			=> 'DashboardController',
 		'masterbarang'		=> 'Transaksi_barang\BarangController',
+		'transaksi'			=> 'Transaksi_barang\TransaksiController',
 
 	]);
 });

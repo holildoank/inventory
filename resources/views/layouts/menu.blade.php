@@ -30,6 +30,17 @@
 
                 </ul>
             </li>
+            <li class=""> <a href="javascript:;">
+                <i class="icon-custom-form"></i>
+                <span class="title">Transaksi</span>
+                <span class="arrow data-master open "></span>
+            </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="{{URL::to('transaksi')}}"><i class="fa fa-circle-o"></i>Transaksi</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>
