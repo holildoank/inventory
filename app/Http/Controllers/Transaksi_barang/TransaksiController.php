@@ -84,8 +84,20 @@ class TransaksiController extends Controller
                'label' => 'danger',
                'err' => '<center>OOps!, Anda Belum Memilih Barang </center>'
            ]);
+
+         if(empty($req->total_bayar))
+             return redirect()->back()->withNotif([
+                 'label' => 'danger',
+                 'err' => '<center>Jumlah bayar tidak boleh kosong </center>'
+             ]);
+           if(($req->grandtotal) > ($req->total_bayar))
+           return redirect()->back()->withNotif([
+               'label' => 'danger',
+               'err' => '<center>Maaf Jumlah yang di masukan masih kurang dari jumlah tagihan </center>'
+           ]);
+
         $arr = $this->dispatch(new TransaksiJob($req->all()));
-        return redirect('transaksi/')->withNotif([
+        return redirect('transaksi/show')->withNotif([
                'label' => $arr['label'],
                'err' => $arr['err']
            ]);

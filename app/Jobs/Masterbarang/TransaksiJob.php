@@ -32,6 +32,9 @@ class TransaksiJob extends Job implements SelfHandling
            $me = \Me::data()->id_karyawan;
             try{
                \DB::begintransaction();
+
+               
+
                $barang =data_transaksi::create([
                    'id_karyawan'      =>$me,
                    'tgl_transaksi'        =>date('Y-m-d', strtotime($this->req['tgl_transaksi'])),
